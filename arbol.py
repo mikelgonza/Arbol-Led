@@ -94,6 +94,38 @@ def main():
 
         # Encendemos leds
         manzanas.show()
+    
+    def manzanaBlink(id, color=(0,0,0)):
+        a = b = 0
+
+        # Definimos el rango de los leds en toda la tira segun el id
+        if id == 1: a=0; b=8
+        if id == 2: a=8; b=16
+        if id == 3: a=16; b=24
+        if id == 4: a=24; b=32
+        if id == 5: a=32; b=40
+        if id == 6: a=40; b=48
+        if id == 7: a=48; b=56
+        if id == 8: a=56; b=64
+        if id == 9: a=64; b=72
+        if id == 10: a=72; b=80
+
+        # Hacemos parpadeo hasta que se pare el hilo
+        while not stop_manzanaBlink:
+            
+            # Encendemos leds
+            for i in range(a,b):
+                manzanas[i] = color
+            manzanas.show()
+
+            time.sleep(0.5)
+
+            # Apagamos leds
+            for i in range(a,b):
+                manzanas[i] = (0,0,0)
+            manzanas.show()
+
+            time.sleep(0.5)
         
        
     def hilo2(nombre, texto):
@@ -139,11 +171,15 @@ def main():
     nombre_anterior = ""
     texto_anterior = ""
     primer_ciclo = True
+    primera_manzana = True
+    id_blink = 0
+    id_blink_anterior = 0
 
     # Bucle principal
     while True:
 
         stop_hilo2 = False
+        stop_manzanaBlink = False
         
         #Leemos json
         data = requests.get(url)
@@ -213,7 +249,7 @@ def main():
             if not isinstance(g, int) or g < 0 or g > 255: g = 0
             if not isinstance(b, int) or b < 0 or b > 255: b = 0 
             color = (r, g, b)
-                       
+                    
             # Mandamos encender manzanas si el id es correcto
             if (id >= 1 and id <= 10):
                 if activo:
@@ -221,6 +257,34 @@ def main():
                     print("Encender manzana", id, )
                 else:
                     manzana(id)
+                
+                if blink:
+                    id_blink = id
+                    if primera_manzana == True:
+    
+                        print("Primera manzana, mandamos parpadeo")
+                        # Iniciamos hilo2 y mandamos mensaje
+                        thread2 = Thread(target=manzanaBlink, args=(id, color))
+                        thread2.start()
+
+                        primera_manzana = False
+                    else:
+                        if id_blink != id_blink_anterior:
+                            print("Blink manzana cambiada, paramos manzanaBlink")
+                            stop_manzanaBlink = True
+                            while thread2.is_alive():
+                                time.sleep(0.05)
+                            
+                            manzana(id_blink_anterior, color_anterior)
+                            stop_manzanaBlink = False
+                            
+                            # Iniciamos hilo2
+                            print("Mandamos parpadeo de la nueva manzana")
+                            thread2 = Thread(target=manzanaBlink, args=(id, color))
+                            thread2.start()
+                    
+                    id_blink_anterior = id_blink
+                    color_anterior = id_blink
      
         
         # Tiempo de espera de cada ciclo

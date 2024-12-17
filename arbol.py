@@ -49,9 +49,10 @@ def main():
     verde = graphics.Color(0,255,0)
     azul = graphics.Color(0, 0, 255)
     rojo = graphics.Color(255, 0, 0)
+    blanco = graphics.Color(255,255,255)
 
     fuente1 = graphics.Font()
-    fuente1.LoadFont("fonts/texgyre-27.bdf")
+    fuente1.LoadFont("fonts/6x13.bdf")
 
     fuente2 = graphics.Font()
     fuente2.LoadFont("fonts/7x13B.bdf")
@@ -118,7 +119,7 @@ def main():
                 panel_texto.Clear()
 
                 # Preparamos texto
-                len = graphics.DrawText(panel_texto, fuente2, pos, 27, verde, texto)
+                len = graphics.DrawText(panel_texto, fuente2, pos, 29, verde, texto)
                 pos -= 1
                 if (pos + len < 0):
                     pos = panel_texto.width
@@ -132,7 +133,7 @@ def main():
                 else:
                     pos2 = 1
                     
-                graphics.DrawText(panel_nombre, fuente2, pos2, 10, azul, nombre)
+                graphics.DrawText(panel_nombre, fuente1, pos2, 16, blanco, nombre)
                     
                 time.sleep(0.05)
         
@@ -182,7 +183,7 @@ def main():
                 print("Texto cambiado, paramos hilo2")
                 stop_hilo2 = True
                 while thread.is_alive():
-                    time.sleep(0.01)
+                    time.sleep(0.05)
                 
                 stop_hilo2 = False
                 

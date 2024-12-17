@@ -69,7 +69,7 @@ def main():
         for i in range(a,b):
             manzanas[i] = color
             manzanas.show()
-            time.sleep(0.07)
+            time.sleep(0.1)
             
     # Funcion que gestiona las manzanas, recibe el id y el color
     def manzana(id, color=(0,0,0)):
@@ -234,7 +234,7 @@ def main():
         texto_anterior = texto
         
         # Encendemos tronco
-        tronco((255,255,255))
+        tronco((156,156,156))
         
         # Encendemos manzanas
         for i in json["manzanas"]:

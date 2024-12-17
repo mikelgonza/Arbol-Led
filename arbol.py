@@ -181,16 +181,13 @@ def main():
         
         #Leemos json
         data = requests.get(url)
-        print("Conectando API...")
         
         # Si hay fallo en la conexion reintentamos en 5 segundos
         while data.status_code != 200:
-            print("Error de conexion:",requests.status_code)
             time.sleep(5)
             data = requests.get(url)
         
         # Recogemos el json
-        print("API conectada")
         json = data.json()
               
         # Variables texto panel
@@ -198,11 +195,7 @@ def main():
         texto = json["texto"]
 
         # Corregir salto de linea del texto
-        print("texto antes de corregir:",texto)
         texto = texto.replace("\n", " ")
-        print("texto corregido:", texto)
-
-
         
         # Comprobamos si hay cambios en el nombre
         if (nombre_anterior != nombre or texto_anterior != texto):
@@ -210,14 +203,12 @@ def main():
             # En el primer ciclo mandamos el texto
             if primer_ciclo == 1:
                 
-                print("Primer ciclo, mandamos texto")
-                # Iniciamos hilo2 y mandamos mensaje
                 thread = Thread(target=hilo2, args=(nombre, texto))
                 thread.start()
             
             # si no es el primer ciclo, paramos hilo2 y mandamos nuevo texto
             else:
-                print("Texto cambiado, paramos hilo2")
+
                 stop_hilo2 = True
                 while thread.is_alive():
                     time.sleep(0.05)
@@ -225,7 +216,6 @@ def main():
                 stop_hilo2 = False
                 
                 # Iniciamos hilo2
-                print("Mandamos texto con nuevos datos")
                 thread = Thread(target=hilo2, args=(nombre, texto))
                 thread.start()
                 
@@ -257,7 +247,6 @@ def main():
             if (id >= 1 and id <= 10):
                 if activo:
                     manzana(id, color)
-                    print("Encender manzana", id, )
                 else:
                     manzana(id)
                 
@@ -265,7 +254,6 @@ def main():
                     id_blink = id
                     if primera_manzana == True:
     
-                        print("Primera manzana, mandamos parpadeo")
                         # Iniciamos hilo2 y mandamos mensaje
                         thread2 = Thread(target=manzanaBlink, args=(id, color))
                         thread2.start()
@@ -273,7 +261,6 @@ def main():
                         primera_manzana = False
                     else:
                         if id_blink != id_blink_anterior:
-                            print("Blink manzana cambiada, paramos manzanaBlink")
                             stop_manzanaBlink = True
                             while thread2.is_alive():
                                 time.sleep(0.05)
@@ -282,7 +269,6 @@ def main():
                             stop_manzanaBlink = False
                             
                             # Iniciamos hilo2
-                            print("Mandamos parpadeo de la nueva manzana")
                             thread2 = Thread(target=manzanaBlink, args=(id, color))
                             thread2.start()
                     
@@ -294,7 +280,6 @@ def main():
         time.sleep(10)
 
         primer_ciclo = False
-        print("Reiniciamos bucle principal")
       
         
 

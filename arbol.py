@@ -274,8 +274,12 @@ def main():
                     
                     id_blink_anterior = id_blink
                     color_anterior = id_blink
+
+                # si blink esta False y nombre es ALBIA apagamos
+                else:
+                    stop_manzanaBlink = True
+                
      
-        
         # Tiempo de espera de cada ciclo
         time.sleep(60)
 

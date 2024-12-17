@@ -71,7 +71,6 @@ def main():
             manzanas.show()
             time.sleep(0.07)
             
-
     # Funcion que gestiona las manzanas, recibe el id y el color
     def manzana(id, color=(0,0,0)):
         a = b = 0
@@ -127,7 +126,6 @@ def main():
 
             time.sleep(0.5)
         
-       
     def hilo2(nombre, texto):
         
         # Objetos texto panel
@@ -195,11 +193,16 @@ def main():
         print("API conectada")
         json = data.json()
               
-        
         # Variables texto panel
         nombre = json["nombre"]
         texto = json["texto"]
-        
+
+        # Corregir salto de linea del texto
+        print("texto antes de corregir:",texto)
+        texto = texto.replace("\n", " ")
+        print("texto corregido:", texto)
+
+
         
         # Comprobamos si hay cambios en el nombre
         if (nombre_anterior != nombre or texto_anterior != texto):

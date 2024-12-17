@@ -7,8 +7,6 @@ from PIL import Image
 from threading import Thread
 
 
-    
-    
 
 def main():
     
@@ -71,7 +69,7 @@ def main():
         for i in range(a,b):
             manzanas[i] = color
             manzanas.show()
-            time.sleep(0.05)
+            time.sleep(0.07)
             
 
     # Funcion que gestiona las manzanas, recibe el id y el color
@@ -192,8 +190,7 @@ def main():
                 thread = Thread(target=hilo2, args=(nombre, texto))
                 thread.start()
                 
-       
-        
+
         nombre_anterior = nombre
         texto_anterior = texto
         

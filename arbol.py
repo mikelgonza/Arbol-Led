@@ -277,7 +277,7 @@ def main():
      
         
         # Tiempo de espera de cada ciclo
-        time.sleep(10)
+        time.sleep(60)
 
         primer_ciclo = False
       

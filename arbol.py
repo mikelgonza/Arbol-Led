@@ -265,7 +265,7 @@ def main():
                             while thread2.is_alive():
                                 time.sleep(0.05)
                             
-                            manzana(id_blink_anterior, color_anterior)
+                            manzana(id_blink_anterior, (255,0,0))
                             stop_manzanaBlink = False
                             
                             # Iniciamos hilo2
@@ -273,11 +273,14 @@ def main():
                             thread2.start()
                     
                     id_blink_anterior = id_blink
-                    color_anterior = id_blink
 
                 # si blink esta False y nombre es ALBIA apagamos
                 else:
-                    stop_manzanaBlink = True
+                    if nombre == "ALBIA":
+                        stop_manzanaBlink = True
+                        # Apagamos manzana
+                        manzana(id_blink_anterior)
+
                 
      
         # Tiempo de espera de cada ciclo

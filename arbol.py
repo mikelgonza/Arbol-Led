@@ -251,9 +251,10 @@ def main():
                     manzana(id)
                 
                 if blink:
+                    print("detectamos blink")
                     id_blink = id
                     if primera_manzana == True:
-    
+                        print("primera manzana, mandamos blink")
                         # Iniciamos hilo2 y mandamos mensaje
                         thread2 = Thread(target=manzanaBlink, args=(id, color))
                         thread2.start()
@@ -261,6 +262,7 @@ def main():
                         primera_manzana = False
                     else:
                         if id_blink != id_blink_anterior:
+                            print("ha cambiado blink, paramos el actual")
                             stop_manzanaBlink = True
                             while thread2.is_alive():
                                 time.sleep(0.05)
@@ -269,6 +271,7 @@ def main():
                             stop_manzanaBlink = False
                             
                             # Iniciamos hilo2
+                            print("iniciamos nuevo blink")
                             thread2 = Thread(target=manzanaBlink, args=(id, color))
                             thread2.start()
                     
@@ -277,11 +280,14 @@ def main():
                 # si blink esta False y nombre es ALBIA apagamos
                 else:
                     if nombre == "ALBIA":
+                        print("no hay blink, y nombre ALBIA, apagamos blink")
                         stop_manzanaBlink = True
                         # Apagamos manzana
                         manzana(id_blink_anterior)
 
-                
+        if nombre == "ALBIA":
+            primer_ciclo = True
+            primera_manzana = True
      
         # Tiempo de espera de cada ciclo
         time.sleep(60)
@@ -291,4 +297,5 @@ def main():
         
 
 if __name__ == '__main__':
+    
     main()
